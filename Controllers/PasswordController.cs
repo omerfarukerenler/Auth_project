@@ -18,24 +18,53 @@ namespace Auth_project.Controllers
             _context = context;
         }
 
-        // GET: Password
+       
         public async Task<IActionResult> Index()
         {
             return View(await _context.PasswordTables.ToListAsync());
         }
 
+
+        public async  Task<IActionResult> Details(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var passwordTable = await _context.PasswordTables.FirstOrDefaultAsync(m => m.Id == id);
+            if(passwordTable == null)
+            {
+                return NotFound();
+            }
+            return View(passwordTable);
+        }
         
      
 
-        // GET: Password/Create
-        public IActionResult Create()
+        
+        public async Task<IActionResult> Create(int id = 0)
         {
+            if(id == 0)
             return View();
+            else
+            {
+
+                var passwordTable = await _context.PasswordTables.FindAsync(id);
+                if (passwordTable == null)
+                {
+                    return NotFound();
+                }
+                return View(passwordTable);
+
+            }
         }
 
-        // POST: Password/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+
+
+
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,SiteName,KullaniciAdi,Sifre")] PasswordTable passwordTable)
@@ -49,7 +78,7 @@ namespace Auth_project.Controllers
             return View(passwordTable);
         }
 
-        // GET: Password/Edit/5
+       
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -65,9 +94,7 @@ namespace Auth_project.Controllers
             return View(passwordTable);
         }
 
-        // POST: Password/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,SiteName,KullaniciAdi,Sifre")] PasswordTable passwordTable)
@@ -100,7 +127,6 @@ namespace Auth_project.Controllers
             return View(passwordTable);
         }
 
-        // GET: Password/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -118,7 +144,7 @@ namespace Auth_project.Controllers
             return View(passwordTable);
         }
 
-        // POST: Password/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

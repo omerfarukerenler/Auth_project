@@ -1,12 +1,13 @@
 ﻿@model Auth_project.Models.PasswordTable
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
 }
 
-<h3>Silmek istediğinizden emin misiniz?</h3>
-<div>
+<h1>Password</h1>
 
+<div>
+    
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -28,10 +29,8 @@
             @Html.DisplayFor(model => model.Sifre)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Geri Dön</a>
-    </form>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>
