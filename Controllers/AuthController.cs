@@ -57,7 +57,7 @@ namespace Auth_project.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    return RedirectToAction("index", "Home");
+                    return RedirectToAction("Login", "Auth");
                 }
 
                 foreach (var error in result.Errors)
